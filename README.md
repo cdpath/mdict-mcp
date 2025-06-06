@@ -6,14 +6,17 @@ uvx mdict-mcp -d /path/to/mdicts/
 ```
 
 
-## Available Tools
+Tools
 
-### Core Dictionary Tools
 
-<details>
-<summary><strong>lookup_word</strong> - Look up a word in the loaded dictionaries</summary>
+<table>
+<tr>
+<td> Tool </td> <td> Request </td> <td> Response </td>
+</tr>
+<tr>
+<td> lookup_word </td>
+<td>
 
-**Request:**
 ```json
 {
   "word": "science",
@@ -21,7 +24,9 @@ uvx mdict-mcp -d /path/to/mdicts/
 }
 ```
 
-**Response:**
+</td>
+<td>
+
 ```json
 {
   "word": "science",
@@ -31,12 +36,13 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
 
-<details>
-<summary><strong>search_words</strong> - Search for words matching a pattern</summary>
+</td>
+</tr>
+<tr>
+<td> search_words </td>
+<td>
 
-**Request:**
 ```json
 {
   "pattern": "sci",
@@ -45,7 +51,9 @@ uvx mdict-mcp -d /path/to/mdicts/
 }
 ```
 
-**Response:**
+</td>
+<td>
+
 ```json
 {
   "pattern": "sci",
@@ -56,12 +64,13 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
 
-<details>
-<summary><strong>find_similar_words</strong> - Find words similar to a given word using fuzzy matching</summary>
+</td>
+</tr>
+<tr>
+<td> find_similar_words </td>
+<td>
 
-**Request:**
 ```json
 {
   "word": "science",
@@ -71,7 +80,9 @@ uvx mdict-mcp -d /path/to/mdicts/
 }
 ```
 
-**Response:**
+</td>
+<td>
+
 ```json
 {
   "word": "science",
@@ -91,19 +102,18 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
 
-### Dictionary Management Tools
+</td>
+</tr>
+<tr>
+<td> list_dictionaries </td>
+<td>
 
-<details>
-<summary><strong>list_dictionaries</strong> - List all loaded dictionaries with metadata</summary>
+None
 
-**Request:**
-```json
-{}
-```
+</td>
+<td>
 
-**Response:**
 ```json
 {
   "count": 2,
@@ -118,17 +128,18 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
 
-<details>
-<summary><strong>scan_dictionaries</strong> - Scan the dictionary directory for new MDX files and load them</summary>
+</td>
+</tr>
+<tr>
+<td> scan_dictionaries </td>
+<td>
 
-**Request:**
-```json
-{}
-```
+None
 
-**Response:**
+</td>
+<td>
+
 ```json
 {
   "directory": "./mdicts",
@@ -141,19 +152,22 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
 
-<details>
-<summary><strong>get_dictionary_metadata</strong> - Get detailed metadata information for a specific dictionary</summary>
+</td>
+</tr>
+<tr>
+<td> get_dictionary_metadata </td>
+<td>
 
-**Request:**
 ```json
 {
   "dictionary": "dictionary_name"
 }
 ```
 
-**Response:**
+</td>
+<td>
+
 ```json
 {
   "dictionary": "Webster",
@@ -166,12 +180,13 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
 
-<details>
-<summary><strong>get_dictionary_keys</strong> - Get all available keys (words) from a dictionary or sample of keys</summary>
+</td>
+</tr>
+<tr>
+<td> get_dictionary_keys </td>
+<td>
 
-**Request:**
 ```json
 {
   "dictionary": "dictionary_name",
@@ -180,7 +195,9 @@ uvx mdict-mcp -d /path/to/mdicts/
 }
 ```
 
-**Response:**
+</td>
+<td>
+
 ```json
 {
   "dictionary": "Webster",
@@ -193,19 +210,20 @@ uvx mdict-mcp -d /path/to/mdicts/
   "success": true
 }
 ```
-</details>
+
+</td>
+</tr>
+</table>
 
 
-## Dependencies
+Dependencies
 
 - mcp: Model Context Protocol implementation
 - mdict-utils: MDX/MDD file parsing
 
 
-## Development
 
-
-local testing
+Local testing
 
 ```bash
 uv --directory $HOME/Developer/mdict-mcp run mdict-mcp --log-level INFO --dictionary-dir /path/to/mdicts/
