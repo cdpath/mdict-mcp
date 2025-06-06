@@ -7,7 +7,6 @@ This server provides dictionary lookup functionality for LLMs using MDict files.
 
 import asyncio
 import json
-import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
@@ -34,7 +33,6 @@ class MCPServerConfig(BaseModel):
     
     dictionary_paths: List[Path] = []
     dictionary_dir: Optional[Path] = None
-    log_level: str = "INFO"
 
 
 class MDictMCPServer:
@@ -43,25 +41,15 @@ class MDictMCPServer:
     def __init__(self, config: MCPServerConfig):
         self.config = config
         self.dictionary_manager = DictionaryManager()
-        self.logger = logging.getLogger(__name__)
         
-        # Configure logging
-        logging.basicConfig(
-            level=getattr(logging, config.log_level.upper()),
-            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        )
-    
     async def initialize(self) -> None:
         """Initialize the server and load dictionaries."""
-        self.logger.info("Initializing MDict MCP Server")
-        
         # Load dictionaries
         for dict_path in self.config.dictionary_paths:
             try:
                 await self.dictionary_manager.load_dictionary(dict_path)
-                self.logger.info(f"Loaded dictionary: {dict_path}")
             except Exception as e:
-                self.logger.error(f"Failed to load dictionary {dict_path}: {e}")
+                pass
     
     def get_available_tools(self) -> List[Tool]:
         """Get list of available tools."""
@@ -217,7 +205,6 @@ class MDictMCPServer:
                 raise ValueError(f"Unknown tool: {request.params.name}")
         
         except Exception as e:
-            self.logger.error(f"Error handling tool call {request.params.name}: {e}")
             return CallToolResult(
                 content=[TextContent(type="text", text=f"Error: {str(e)}")],
                 isError=True
@@ -381,11 +368,9 @@ class MDictMCPServer:
             for dict_path in new_files:
                 try:
                     await self.dictionary_manager.load_dictionary(dict_path)
-                    self.logger.info(f"Loaded new dictionary: {dict_path}")
                     loaded_count += 1
                     successfully_loaded.append(str(dict_path))
                 except Exception as e:
-                    self.logger.error(f"Failed to load dictionary {dict_path}: {e}")
                     failed_files.append({
                         "path": str(dict_path),
                         "name": dict_path.name,
@@ -597,8 +582,8 @@ class MDictMCPServer:
                         if len(similar_words) >= limit * 3:  # Get more candidates for better sorting
                             break
                     
-                except Exception as e:
-                    self.logger.warning(f"Error processing dictionary {dict_info.name}: {e}")
+                except Exception:
+                    pass
             
             # Sort by similarity score (higher is better) and edit distance (lower is better)
             similar_words.sort(key=lambda x: (-x["similarity_score"], x["edit_distance"]))
