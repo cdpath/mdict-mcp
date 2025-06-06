@@ -12,7 +12,7 @@
 ```json
 {
   "word": "science",
-  "dictionary": "optional_specific_dictionary_name"
+  "dictionary": "dictionary_name"
 }
 ```
 
@@ -24,7 +24,7 @@
   "word": "science",
   "found": true,
   "dictionary": null,
-  "definition": "<HTML definition content>",
+  "definition": "<HTML definition>",
   "success": true
 }
 ```
@@ -39,7 +39,7 @@
 {
   "pattern": "sci",
   "limit": 10,
-  "dictionary": "optional_specific_dictionary_name"
+  "dictionary": "dictionary_name"
 }
 ```
 
@@ -66,7 +66,7 @@
 ```json
 {
   "word": "science",
-  "dictionary": "optional_specific_dictionary_name",
+  "dictionary": "dictionary_name",
   "limit": 10,
   "max_distance": 2
 }
