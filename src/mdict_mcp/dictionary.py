@@ -8,6 +8,7 @@ import asyncio
 import re
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Any
+import logging
 
 from mdict_utils.reader import MDX, MDD, query, get_keys, meta
 
@@ -57,6 +58,7 @@ class DictionaryInfo:
             )
             return result
         except Exception as e:
+            logging.getLogger(__name__).error(f"Error looking up '{word}' in {self.name}: {e}")
             return None
     
     def _sync_lookup(self, word: str) -> Optional[str]:
@@ -69,6 +71,7 @@ class DictionaryInfo:
             return None
         except Exception as e:
             # If exact query fails, try fallback with manual search
+            logging.getLogger(__name__).debug(f"Query failed for '{word}', trying fallback: {e}")
             return self._fallback_lookup(word)
     
     def _fallback_lookup(self, word: str) -> Optional[str]:
@@ -87,6 +90,7 @@ class DictionaryInfo:
             
             return None
         except Exception as e:
+            logging.getLogger(__name__).error(f"Fallback lookup failed for '{word}': {e}")
             return None
     
     def _clean_content(self, content: str) -> str:
@@ -110,6 +114,7 @@ class DictionaryInfo:
             )
             return results
         except Exception as e:
+            logging.getLogger(__name__).error(f"Error searching '{pattern}' in {self.name}: {e}")
             return []
     
     def _sync_search(self, pattern: str, limit: int) -> List[str]:
@@ -131,6 +136,7 @@ class DictionaryInfo:
             
             return sorted(matches)
         except Exception as e:
+            logging.getLogger(__name__).error(f"Search failed for '{pattern}': {e}")
             return []
 
 
@@ -139,6 +145,7 @@ class DictionaryManager:
     
     def __init__(self):
         self.dictionaries: Dict[str, DictionaryInfo] = {}
+        self.logger = logging.getLogger(__name__)
     
     async def load_dictionary(self, path: Path) -> None:
         """Load a dictionary from an MDX file."""
@@ -161,8 +168,10 @@ class DictionaryManager:
             dict_info = DictionaryInfo(name, path, metadata)
             
             self.dictionaries[name] = dict_info
+            self.logger.info(f"Successfully loaded dictionary: {name} ({metadata.get('Record', 'Unknown')} entries)")
             
         except Exception as e:
+            self.logger.error(f"Failed to load dictionary {path}: {e}")
             raise
     
     def _load_metadata_sync(self, path: Path) -> Dict[str, Any]:
@@ -172,6 +181,7 @@ class DictionaryManager:
             metadata = meta(str(path))
             return metadata
         except Exception as e:
+            self.logger.warning(f"Failed to load metadata for {path}: {e}")
             # Return basic metadata if official method fails
             return {
                 "title": path.stem,
