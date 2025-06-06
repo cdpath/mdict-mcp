@@ -8,6 +8,7 @@ This server provides dictionary lookup functionality for LLMs using MDict files.
 import asyncio
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence
 
@@ -707,20 +708,27 @@ async def run_server(config: MCPServerConfig) -> None:
 
 
 @click.command()
-@click.option(
-    "--dictionary-dir", "-d",
-    default="./mdicts",
-    type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path),
-    help="Path to directory containing MDX dictionary files (default: ./mdicts)"
-)
-@click.option(
-    "--log-level", "-l",
-    default="INFO",
-    type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"]),
-    help="Log level"
-)
-def main(dictionary_dir: Path, log_level: str) -> None:
+def main() -> None:
     """Start the MDict MCP Server."""
+    
+    # Get configuration from environment variables
+    env_dict_dir = os.getenv("MDICT_DICTIONARY_DIR")
+    
+    # Dictionary directory is required via environment variable
+    if not env_dict_dir:
+        logging.error("Dictionary directory not specified!")
+        logging.error("Please set the MDICT_DICTIONARY_DIR environment variable:")
+        logging.error("  export MDICT_DICTIONARY_DIR=/path/to/mdicts/")
+        return
+    
+    dictionary_dir = Path(env_dict_dir)
+    
+    # Check if dictionary directory exists
+    if not dictionary_dir.exists():
+        logging.error(f"Dictionary directory not found: {dictionary_dir}")
+        logging.error("Please ensure the directory exists and set the correct path:")
+        logging.error("  export MDICT_DICTIONARY_DIR=/path/to/mdicts/")
+        return
     
     # Find all MDX files in the specified directory
     dictionary_files = list(dictionary_dir.glob("*.mdx"))

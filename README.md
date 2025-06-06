@@ -1,17 +1,40 @@
 # MDict MCP Server
 
 
-Usage:
+Config for Claude Desktop:
 
 ```
-uvx mdict-mcp -d /path/to/mdicts/
+{
+  "mcpServers": {
+    "mdict": {
+      "command": "uvx",
+      "args": [
+        "mdict-mcp",
+        "-d",
+        "/path/to/mdicts/"
+      ],
+      "env": {
+        "MDICT_DICTIONARY_DIR": "/path/to/mdicts/"
+      }
+    }
+  }
+}
+
 ```
 
+Config for ChatWise:
 
-[Available Tools](./TOOLS.md)
+```
+# type stdio
+# env MDICT_DICTIONARY_DIR=/path/to/mdicts/
+uvx mdict-mcp
+```
+
+Available Tools: [TOOLS.md](./TOOLS.md)
 
 
 Dependencies: 
+
 - mcp
 - mdict-utils
 
