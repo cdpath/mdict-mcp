@@ -1,6 +1,6 @@
 [project]
 name = "mdict-mcp"
-version = "0.2.3"
+version = "0.2.4"
 description = "MCP server to allow LLMs to read MDX/MDD dictionary files directly"
 readme = "README.md"
 authors = [

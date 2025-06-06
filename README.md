@@ -42,5 +42,5 @@ Dependencies:
 Local testing:
 
 ```bash
-uv --directory $HOME/Developer/mdict-mcp run mdict-mcp --log-level INFO --dictionary-dir /path/to/mdicts/
+uv --directory $HOME/Developer/mdict-mcp run mdict-mcp
 ```

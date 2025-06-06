@@ -740,7 +740,6 @@ def main() -> None:
     config = MCPServerConfig(
         dictionary_paths=dictionary_files,
         dictionary_dir=dictionary_dir,
-        log_level=log_level
     )
     
     try:
