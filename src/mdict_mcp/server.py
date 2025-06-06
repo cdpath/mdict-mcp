@@ -726,10 +726,8 @@ def main(dictionary_dir: Path, log_level: str) -> None:
     dictionary_files = list(dictionary_dir.glob("*.mdx"))
     
     if not dictionary_files:
-        click.echo(f"No MDX dictionary files found in {dictionary_dir}")
+        logging.error(f"No MDX dictionary files found in {dictionary_dir}")
         return
-    
-    click.echo(f"Found {len(dictionary_files)} dictionaries in {dictionary_dir}")
     
     config = MCPServerConfig(
         dictionary_paths=dictionary_files,
@@ -737,16 +735,12 @@ def main(dictionary_dir: Path, log_level: str) -> None:
         log_level=log_level
     )
     
-    click.echo(f"Starting MDict MCP Server with {len(config.dictionary_paths)} dictionaries...")
-    for dict_path in config.dictionary_paths:
-        click.echo(f"  - {dict_path}")
-    
     try:
         asyncio.run(run_server(config))
     except KeyboardInterrupt:
-        click.echo("\nServer stopped.")
+        logging.error("\nServer stopped.")
     except Exception as e:
-        click.echo(f"Server error: {e}")
+        logging.error(f"Server error: {e}")
         raise
 
 
