@@ -1,28 +1,8 @@
 # MDict MCP Server
 
-## Installation
 
 ```bash
-git clone https://github.com/cdpath/mdict-mcp
-cd mdict-mcp
-uv sync
-```
-
-## Usage
-
-1. Place your MDX dictionary files in the `/path/to/mdicts/` directory
-2. Start the MCP server:
-
-```bash
-uv run mdict-mcp -d /path/to/mdicts/
-```
-
-3. Connect from your MCP client (Claude Desktop, Chatwise, etc.)
-
-Chatwise:
-
-```
-uv --directory $HOME/Developer/mdict-mcp run mdict-mcp --log-level INFO --dictionary-dir /path/to/mdicts/
+uvx mdict-mcp -d /path/to/mdicts/
 ```
 
 
@@ -216,7 +196,17 @@ uv --directory $HOME/Developer/mdict-mcp run mdict-mcp --log-level INFO --dictio
 </details>
 
 
-### Dependencies
+## Dependencies
 
 - mcp: Model Context Protocol implementation
 - mdict-utils: MDX/MDD file parsing
+
+
+## Development
+
+
+local testing
+
+```bash
+uv --directory $HOME/Developer/mdict-mcp run mdict-mcp --log-level INFO --dictionary-dir /path/to/mdicts/
+```
