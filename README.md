@@ -9,9 +9,7 @@ Config for Claude Desktop:
     "mdict": {
       "command": "uvx",
       "args": [
-        "mdict-mcp",
-        "-d",
-        "/path/to/mdicts/"
+        "mdict-mcp"
       ],
       "env": {
         "MDICT_DICTIONARY_DIR": "/path/to/mdicts/"
