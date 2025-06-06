@@ -1,9 +1,20 @@
 # MDict MCP Server
 
 
-Config for Claude Desktop:
+Available Tools: [TOOLS.md](./TOOLS.md)
 
-```
+
+Dependencies: 
+
+- mcp
+- mdict-utils
+
+
+Claude Desktop
+
+![Claude Desktop](./claude.png)
+
+```json
 {
   "mcpServers": {
     "mdict": {
@@ -17,25 +28,17 @@ Config for Claude Desktop:
     }
   }
 }
-
 ```
 
-Config for ChatWise:
+ChatWise
 
-```
+![ChatWise](./chatwise.png)
+
+```bash
 # type stdio
 # env MDICT_DICTIONARY_DIR=/path/to/mdicts/
 uvx mdict-mcp
 ```
-
-Available Tools: [TOOLS.md](./TOOLS.md)
-
-
-Dependencies: 
-
-- mcp
-- mdict-utils
-
 
 Local testing:
 
